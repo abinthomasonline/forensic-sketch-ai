@@ -95,7 +95,7 @@ export default function ImageInput({ image, onImageChange }: ImageInputProps) {
             Upload Photo
           </button>
           <button
-            onClick={startCamera}
+            onClick={() => startCamera()}
             className="w-full px-4 py-3 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition"
           >
             Use Camera
