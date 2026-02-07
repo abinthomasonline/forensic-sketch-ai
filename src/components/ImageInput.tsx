@@ -117,7 +117,11 @@ export default function ImageInput({ image, onImageChange }: ImageInputProps) {
 
       {image && !showCamera && (
         <div className="space-y-3">
-          <img src={image} alt="Selected" className="w-full rounded-md" />
+          <img
+            src={image}
+            alt="Selected"
+            className="w-full max-h-96 object-contain rounded-md bg-gray-50"
+          />
           <button
             onClick={() => onImageChange('')}
             className="w-full px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition"

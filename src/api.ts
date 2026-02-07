@@ -7,6 +7,14 @@ import {
 
 const OPENROUTER_API_BASE = 'https://openrouter.ai/api/v1'
 
+// Helper to get origin safely in both browser and Node.js environments
+const getOrigin = () => {
+  if (typeof window !== 'undefined') {
+    return window.location.origin
+  }
+  return 'http://localhost:5173' // Fallback for tests
+}
+
 export interface VisionResponse {
   description: string
 }
@@ -25,7 +33,7 @@ export async function generateForensicDescription(
     headers: {
       'Authorization': `Bearer ${apiKey}`,
       'Content-Type': 'application/json',
-      'HTTP-Referer': window.location.origin,
+      'HTTP-Referer': getOrigin(),
       'X-Title': 'Face Reconstruction App'
     },
     body: JSON.stringify({
@@ -82,7 +90,7 @@ export async function generateReconstructedImage(
     headers: {
       'Authorization': `Bearer ${apiKey}`,
       'Content-Type': 'application/json',
-      'HTTP-Referer': window.location.origin,
+      'HTTP-Referer': getOrigin(),
       'X-Title': 'Face Reconstruction App'
     },
     body: JSON.stringify({
@@ -94,7 +102,10 @@ export async function generateReconstructedImage(
         }
       ],
       // Required for image generation models
-      modalities: ['image', 'text']
+      modalities: ['image', 'text'],
+      image_config: {
+        aspect_ratio: "1:1"
+      }
     })
   })
 

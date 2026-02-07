@@ -5,12 +5,12 @@ interface ApiKeyInputProps {
   onApiKeyChange: (key: string) => void
 }
 
+// Export public key for testing
+export const PUBLIC_KEY = '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'
+
 export default function ApiKeyInput({ apiKey, onApiKeyChange }: ApiKeyInputProps) {
   const [rememberKey, setRememberKey] = useState(false)
   const [showPublicKey, setShowPublicKey] = useState(false)
-
-  // TODO: Replace with actual public key
-  const PUBLIC_KEY = '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'
 
   useEffect(() => {
     const savedKey = localStorage.getItem('openrouter_api_key')

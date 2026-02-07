@@ -132,11 +132,11 @@ export const FORENSIC_DESCRIPTION_USER_PROMPT = `Analyze this photograph and pro
 
 export const IMAGE_GENERATION_PROMPT_PREFIX = `You are a forensic reconstruction artist generating a facial image from a police-style descriptive report.
 
-Your task is to create a realistic human face that matches the provided description as closely as possible, prioritizing factual alignment with each stated physical attribute.
+Your task is to create a forensic-style facial sketch that matches the provided description as closely as possible, prioritizing factual alignment with each stated physical attribute.
 
 HARD CONSTRAINTS (MUST FOLLOW):
 
-Generate a single, front-facing, neutral-expression portrait.
+Generate a single, front-facing, neutral-expression facial sketch.
 
 Use ONLY the information explicitly provided in the description.
 
@@ -146,43 +146,45 @@ If a feature is marked as “not clearly visible” or missing, render it in a n
 
 Do NOT attempt to recreate or identify any real individual.
 
-Do NOT stylize, dramatize, beautify, or exaggerate features.
+Do NOT beautify, idealize, exaggerate, or stylize beyond traditional police sketch conventions.
 
 Do NOT introduce emotions, personality, or narrative context.
 
 IMAGE STYLE REQUIREMENTS:
 
-Photorealistic
+Black-and-white or grayscale forensic sketch
 
-Neutral lighting
+Pencil or charcoal drawing style
 
-Plain background (light gray or off-white)
+Visible hand-drawn line work and light cross-hatching
 
-No dramatic shadows
+Minimal shading, no color
 
-No artistic or cinematic effects
+Plain white or light background
 
-No text or watermarks
+No artistic, cinematic, or modern illustration effects
+
+No text, labels, or watermarks
 
 FACIAL PRESENTATION:
 
 Head centered in frame
 
-Shoulders slightly visible
+Face only or face with minimal neck visible
 
-Eyes looking straight at the camera
+Eyes looking straight ahead
 
 Mouth closed
 
-Relaxed facial muscles
+Neutral, relaxed facial muscles
 
-No tilt or rotation of the head
+No tilt, rotation, or perspective distortion
 
 FEATURE PRIORITY ORDER:
 
 Overall face shape and proportions
 
-Hair and hairline
+Hair shape and hairline (sketched, not photorealistic)
 
 Eyes (shape, size, spacing)
 
@@ -192,17 +194,17 @@ Mouth and lips
 
 Jaw and chin
 
-Skin tone and texture
+Distinguishing features (scars, moles, asymmetry if specified)
 
-Distinguishing features
-
-Accessories (if specified)
+Accessories (only if explicitly described)
 
 FAILURE CONDITIONS (AVOID):
 
-Adding features not present in the description
+Rendering a photorealistic or painted image
 
-Smoothing or beautifying the face
+Adding texture, lighting, or realism beyond a hand-drawn sketch
+
+Beautifying or smoothing facial features
 
 Making the face resemble a known person
 
@@ -212,3 +214,4 @@ INPUT DESCRIPTION:\n\n`
 
 export const IMAGE_GENERATION_PROMPT_SUFFIX = `\n\nOUTPUT:
 Generate exactly one image that best matches the description.`
+

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-interface Model {
+export interface Model {
   id: string
   displayName: string
   notes?: string
@@ -13,21 +13,30 @@ interface ModelSelectorProps {
   onImageModelChange: (modelId: string) => void
 }
 
-const visionModels: Model[] = [
-  { id: 'meta-llama/llama-4-maverick', displayName: 'Llama 4 Maverick 17B', notes: '1M token context, best multimodal reasoning' },
-  { id: 'qwen/qwen-3-vl-32b-instruct', displayName: 'Qwen3-VL 32B', notes: 'High-precision vision-language understanding' },
-  { id: 'openai/gpt-4o', displayName: 'GPT-4o', notes: 'Fast, strong multimodal capabilities' },
-  { id: 'qwen/qwen-3-vl-8b-instruct', displayName: 'Qwen3-VL 8B', notes: 'Good balance, 256K context' },
-  { id: 'anthropic/claude-3.5-sonnet', displayName: 'Claude 3.5 Sonnet', notes: 'Excellent vision analysis' }
+// Export model lists for testing
+export const visionModels: Model[] = [
+  { id: 'google/gemini-3-flash-preview', displayName: 'Google: Gemini 3 Flash Preview', notes: 'Fast, general multimodal vision' },
+  { id: 'google/gemini-3-pro-preview', displayName: 'Google: Gemini 3 Pro Preview', notes: 'Higher detail, stronger visual reasoning' },
+
+  { id: 'openai/gpt-5-nano', displayName: 'OpenAI: GPT-5 Nano', notes: 'Very fast, lightweight multimodal' },
+  { id: 'openai/gpt-5.2-chat', displayName: 'OpenAI: GPT-5.2 Chat', notes: 'Balanced multimodal performance' },
+  { id: 'openai/gpt-5.2', displayName: 'OpenAI: GPT-5.2', notes: 'High-quality multimodal reasoning' },
+
+  { id: 'anthropic/claude-haiku-4.5', displayName: 'Anthropic: Claude Haiku 4.5', notes: 'Fast, concise extraction' },
+  { id: 'anthropic/claude-sonnet-4.5', displayName: 'Anthropic: Claude Sonnet 4.5', notes: 'Balanced, structured output' },
+  { id: 'anthropic/claude-opus-4.6', displayName: 'Anthropic: Claude Opus 4.6', notes: 'Most detailed, careful analysis' },
+
+  { id: 'moonshotai/kimi-k2.5', displayName: 'MoonshotAI: Kimi K2.5', notes: 'Efficient vision-language model' }
 ]
 
-const imageModels: Model[] = [
-  { id: 'google/gemini-3-pro-image-preview', displayName: 'Nano Banana Pro', notes: 'Best quality, perfect text rendering (Gemini 3 Pro)' },
-  { id: 'openai/gpt-5-image', displayName: 'GPT-5 Image', notes: 'Superior instruction following and text rendering' },
-  { id: 'black-forest-labs/flux.2-max', displayName: 'FLUX.2 Max', notes: 'Top-tier image quality and prompt understanding' },
-  { id: 'sourceful/riverflow-v2-pro', displayName: 'Riverflow V2 Pro', notes: 'Perfect text rendering, top-tier control' },
-  { id: 'black-forest-labs/flux.2-pro', displayName: 'FLUX.2 Pro', notes: 'High-end quality and reliability' }
+export const imageModels: Model[] = [
+  { id: 'google/gemini-2.5-flash-image', displayName: 'Google: Gemini 2.5 Flash Image (Nano Banana)', notes: 'Fast image generation' },
+  { id: 'google/gemini-3-pro-image-preview', displayName: 'Google: Nano Banana Pro (Gemini 3 Pro Image Preview)', notes: 'Higher fidelity image output' },
+
+  { id: 'openai/gpt-5-image-mini', displayName: 'OpenAI: GPT-5 Image Mini', notes: 'Efficient text-to-image' },
+  { id: 'openai/gpt-5-image', displayName: 'OpenAI: GPT-5 Image', notes: 'Best overall image quality' }
 ]
+
 
 export default function ModelSelector({
   visionModel,

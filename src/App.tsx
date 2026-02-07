@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Header from './components/Header'
 import ApiKeyInput from './components/ApiKeyInput'
 import ImageInput from './components/ImageInput'
@@ -11,8 +11,8 @@ import { generateForensicDescription, generateReconstructedImage } from './api'
 function App() {
   const [apiKey, setApiKey] = useState('')
   const [image, setImage] = useState<string | null>(null)
-  const [visionModel, setVisionModel] = useState('meta-llama/llama-4-maverick')
-  const [imageModel, setImageModel] = useState('google/gemini-3-pro-image-preview')
+  const [visionModel, setVisionModel] = useState('google/gemini-3-flash-preview')
+  const [imageModel, setImageModel] = useState('google/gemini-2.5-flash-image')
   const [loading, setLoading] = useState(false)
   const [progressStage, setProgressStage] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -21,6 +21,25 @@ function App() {
     reconstructedImage: string
     description: string
   } | null>(null)
+
+  // Load placeholder image on mount
+  useEffect(() => {
+    const loadPlaceholderImage = async () => {
+      try {
+        const response = await fetch('/placeholder.png')
+        const blob = await response.blob()
+        const reader = new FileReader()
+        reader.onloadend = () => {
+          setImage(reader.result as string)
+        }
+        reader.readAsDataURL(blob)
+      } catch (err) {
+        console.error('Failed to load placeholder image:', err)
+      }
+    }
+
+    loadPlaceholderImage()
+  }, [])
 
   const canRun = apiKey.trim() !== '' && image !== null
 
@@ -97,10 +116,39 @@ function App() {
           )}
         </div>
 
-        <footer className="mt-12 pt-6 border-t border-gray-200">
-          <p className="text-xs text-gray-500 text-center">
+        <footer className="mt-12 pt-6 border-t border-gray-200 text-center space-y-2">
+          <p className="text-xs text-gray-500">
             All processing happens in your browser. No images or data are stored on any server.
             Your API key is only sent directly to OpenRouter.
+          </p>
+          <p className="text-xs text-gray-500">
+            Made with ❤️ by{' '}
+            <a
+              href="https://github.com/abinthomasonline"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:underline"
+            >
+              abinthomasonline
+            </a>
+            {' '}using{' '}
+            <a
+              href="https://code.claude.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:underline"
+            >
+              claude
+            </a>
+            {' '}•{' '}
+            <a
+              href="https://github.com/abinthomasonline/face-reconstruction"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:underline"
+            >
+              source code
+            </a>
           </p>
         </footer>
       </div>
