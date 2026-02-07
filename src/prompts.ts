@@ -16,11 +16,13 @@ Avoid poetic, metaphorical, or subjective language.
 
 If a detail is unclear or not visible, explicitly state: “not clearly visible”.
 
+When describing soft tissue or fullness, base it strictly on visible facial contours and proportions, not medical assumptions.
+
 DESCRIPTION STYLE:
 
 Use clinical, anatomical, and observational language.
 
-Be specific about shape, size, spacing, proportions, and relative measurements.
+Be specific about shape, size, spacing, proportions, relative measurements, and soft-tissue fullness.
 
 Avoid unnecessary hedging unless uncertainty is genuinely present.
 
@@ -33,6 +35,7 @@ Apparent sex:
 Estimated age range (based on facial features only):
 Overall face shape (e.g., oval, round, square, heart-shaped):
 Facial symmetry (e.g., symmetrical, mild asymmetry):
+Overall facial adiposity (very lean / lean / average / moderately full / full), based on visible soft-tissue fullness:
 
 Skin:
 Skin tone (visible areas only):
@@ -81,6 +84,7 @@ Nostrils (size and flare):
 Cheeks:
 Fullness (flat / moderate / full):
 Cheekbone prominence (low / medium / high):
+Soft-tissue thickness (lean / average / thick), based on contour visibility:
 
 Mouth & Lips:
 Mouth width:
@@ -94,6 +98,7 @@ Jaw width (narrow / medium / wide):
 Jaw definition (soft / defined / angular):
 Chin shape (rounded, square, pointed):
 Chin prominence (receding / average / prominent):
+Submental fullness (none / mild / moderate), if visible:
 
 Ears:
 Size relative to head:
