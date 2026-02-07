@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 interface Model {
   id: string
   displayName: string
@@ -33,6 +35,25 @@ export default function ModelSelector({
   onVisionModelChange,
   onImageModelChange
 }: ModelSelectorProps) {
+  const [useCustomVision, setUseCustomVision] = useState(false)
+  const [useCustomImage, setUseCustomImage] = useState(false)
+  const [customVisionModel, setCustomVisionModel] = useState('')
+  const [customImageModel, setCustomImageModel] = useState('')
+
+  const handleCustomVisionChange = (value: string) => {
+    setCustomVisionModel(value)
+    if (value.trim()) {
+      onVisionModelChange(value.trim())
+    }
+  }
+
+  const handleCustomImageChange = (value: string) => {
+    setCustomImageModel(value)
+    if (value.trim()) {
+      onImageModelChange(value.trim())
+    }
+  }
+
   return (
     <div className="bg-white rounded-lg shadow p-6">
       <h2 className="text-lg font-medium text-gray-900 mb-4">Select Models</h2>
@@ -49,47 +70,111 @@ export default function ModelSelector({
         {' '}for the latest available models and IDs
       </p>
 
-      <div className="space-y-4">
+      <div className="space-y-6">
+        {/* Vision Model Section */}
         <div>
-          <label htmlFor="vision-model" className="block text-sm font-medium text-gray-700 mb-2">
-            Vision Model (Description)
-          </label>
-          <select
-            id="vision-model"
-            value={visionModel}
-            onChange={(e) => onVisionModelChange(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          >
-            {visionModels.map((model) => (
-              <option key={model.id} value={model.id}>
-                {model.displayName}
-              </option>
-            ))}
-          </select>
-          <p className="mt-1 text-xs text-gray-500">
-            {visionModels.find(m => m.id === visionModel)?.notes}
-          </p>
+          <div className="flex items-center justify-between mb-2">
+            <label htmlFor="vision-model" className="block text-sm font-medium text-gray-700">
+              Vision Model (Description)
+            </label>
+            <button
+              onClick={() => {
+                setUseCustomVision(!useCustomVision)
+                if (!useCustomVision) {
+                  setCustomVisionModel('')
+                }
+              }}
+              className="text-xs text-blue-600 hover:text-blue-700 font-medium"
+            >
+              {useCustomVision ? 'Use Preset' : 'Use Custom ID'}
+            </button>
+          </div>
+
+          {!useCustomVision ? (
+            <>
+              <select
+                id="vision-model"
+                value={visionModel}
+                onChange={(e) => onVisionModelChange(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                {visionModels.map((model) => (
+                  <option key={model.id} value={model.id}>
+                    {model.displayName}
+                  </option>
+                ))}
+              </select>
+              <p className="mt-1 text-xs text-gray-500">
+                {visionModels.find(m => m.id === visionModel)?.notes}
+              </p>
+            </>
+          ) : (
+            <>
+              <input
+                type="text"
+                value={customVisionModel}
+                onChange={(e) => handleCustomVisionChange(e.target.value)}
+                placeholder="e.g., meta-llama/llama-4-maverick"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+              <p className="mt-1 text-xs text-gray-500">
+                Enter any OpenRouter vision model ID
+              </p>
+            </>
+          )}
         </div>
 
+        {/* Image Model Section */}
         <div>
-          <label htmlFor="image-model" className="block text-sm font-medium text-gray-700 mb-2">
-            Image Model (Reconstruction)
-          </label>
-          <select
-            id="image-model"
-            value={imageModel}
-            onChange={(e) => onImageModelChange(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          >
-            {imageModels.map((model) => (
-              <option key={model.id} value={model.id}>
-                {model.displayName}
-              </option>
-            ))}
-          </select>
-          <p className="mt-1 text-xs text-gray-500">
-            {imageModels.find(m => m.id === imageModel)?.notes}
-          </p>
+          <div className="flex items-center justify-between mb-2">
+            <label htmlFor="image-model" className="block text-sm font-medium text-gray-700">
+              Image Model (Reconstruction)
+            </label>
+            <button
+              onClick={() => {
+                setUseCustomImage(!useCustomImage)
+                if (!useCustomImage) {
+                  setCustomImageModel('')
+                }
+              }}
+              className="text-xs text-blue-600 hover:text-blue-700 font-medium"
+            >
+              {useCustomImage ? 'Use Preset' : 'Use Custom ID'}
+            </button>
+          </div>
+
+          {!useCustomImage ? (
+            <>
+              <select
+                id="image-model"
+                value={imageModel}
+                onChange={(e) => onImageModelChange(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                {imageModels.map((model) => (
+                  <option key={model.id} value={model.id}>
+                    {model.displayName}
+                  </option>
+                ))}
+              </select>
+              <p className="mt-1 text-xs text-gray-500">
+                {imageModels.find(m => m.id === imageModel)?.notes}
+              </p>
+            </>
+          ) : (
+            <>
+              <input
+                type="text"
+                value={customImageModel}
+                onChange={(e) => handleCustomImageChange(e.target.value)}
+                placeholder="e.g., google/gemini-3-pro-image-preview"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+              <p className="mt-1 text-xs text-gray-500">
+                Enter any OpenRouter image generation model ID
+              </p>
+            </>
+          )}
         </div>
       </div>
     </div>
