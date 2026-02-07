@@ -11,9 +11,6 @@ export default function ImageInput({ image, onImageChange }: ImageInputProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  // Normalize empty/null values
-  const hasImage = image && image.trim() !== ''
-
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
@@ -69,7 +66,7 @@ export default function ImageInput({ image, onImageChange }: ImageInputProps) {
     <div className="bg-white rounded-lg shadow p-6">
       <h2 className="text-lg font-medium text-gray-900 mb-4">Upload or Capture Photo</h2>
 
-      {!hasImage && !showCamera && (
+      {!image && !showCamera && (
         <div className="space-y-3">
           <button
             onClick={() => fileInputRef.current?.click()}
@@ -118,7 +115,7 @@ export default function ImageInput({ image, onImageChange }: ImageInputProps) {
         </div>
       )}
 
-      {hasImage && !showCamera && (
+      {image && !showCamera && (
         <div className="space-y-3">
           <img
             src={image}
@@ -126,10 +123,7 @@ export default function ImageInput({ image, onImageChange }: ImageInputProps) {
             className="w-full max-h-96 object-contain rounded-md bg-gray-50"
           />
           <button
-            onClick={() => {
-              onImageChange('')
-              setShowCamera(false)
-            }}
+            onClick={() => onImageChange('')}
             className="w-full px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
           >
             Replace Photo
