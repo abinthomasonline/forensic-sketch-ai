@@ -1,0 +1,317 @@
+PROJECT: Face → Description → Reconstruction (Static Web App)
+
+GOAL
+Build a fully static, mobile-friendly web application that allows a user to:
+
+Upload or capture a photo of a person
+
+Generate a forensic-style facial description using a vision-capable model
+
+Generate a reconstructed face image from that description using an image generation model
+
+Visually compare the original and reconstructed images
+
+The application must:
+
+Require users to bring their own OpenRouter API key
+
+Support switching between OpenRouter models
+
+Have no backend, no authentication, no data storage
+
+Be deployable on GitHub Pages as a static site
+
+NON-GOALS
+
+No hosted/demo mode
+
+No usage tracking or billing
+
+No accounts, login, or persistence
+
+No image storage or history
+
+No server-side code of any kind
+
+HIGH-LEVEL ARCHITECTURE
+
+Client-only web app (SPA)
+
+All logic runs in the browser:
+
+Image upload / camera capture
+
+OpenRouter API calls
+
+Prompt construction
+
+Result rendering
+
+External dependency:
+
+OpenRouter API (user-provided key)
+
+Deployment:
+
+GitHub Pages (static hosting)
+
+TECH STACK (FINAL)
+
+Language:
+
+TypeScript
+
+Frontend:
+
+React
+
+Vite (build + dev server)
+
+Styling:
+
+Tailwind CSS
+
+State management:
+
+React hooks only (useState, useEffect)
+
+No global state libraries
+
+HTTP:
+
+Native fetch API
+
+Image handling:
+
+Browser File API
+
+getUserMedia for camera capture
+
+Base64 encoding for OpenRouter image inputs
+
+Storage:
+
+localStorage (optional, only for remembering API key if user opts in)
+
+SUPPORTED MODEL CAPABILITIES (OPENROUTER)
+
+Two model roles must be supported:
+
+Vision / Multimodal Chat Model
+Requirements:
+
+Accepts image + text input
+
+Outputs text
+
+Used for forensic facial description
+
+Image Generation Model
+Requirements:
+
+Accepts text prompt
+
+Outputs an image (base64 or URL)
+
+Used for face reconstruction
+
+The app must not hardcode specific models, only defaults.
+
+MODEL CONFIGURATION DESIGN
+
+Define model configuration as plain data:
+
+VisionModel:
+
+id (OpenRouter model id string)
+
+displayName
+
+notes (optional)
+
+ImageModel:
+
+id (OpenRouter model id string)
+
+displayName
+
+notes (optional)
+
+Models are selected via dropdowns.
+
+USER FLOW
+
+User opens site
+
+User pastes OpenRouter API key
+
+User uploads image or uses camera
+
+User selects:
+
+Vision model
+
+Image generation model
+
+User clicks “Run Reconstruction”
+
+App performs:
+a. Vision call → forensic description
+b. Image generation call → reconstructed image
+
+UI displays:
+
+Original image
+
+Generated image
+
+Forensic description (expandable)
+
+Optional: similarity score (future)
+
+UI STRUCTURE (COMPONENT TREE)
+
+App
+├─ Header
+├─ ApiKeyInput
+├─ ImageInput
+│ ├─ UploadButton
+│ ├─ CameraCapture
+│ └─ ImagePreview
+├─ ModelSelector
+│ ├─ VisionModelSelect
+│ └─ ImageModelSelect
+├─ RunButton
+├─ ProgressIndicator
+└─ Results
+├─ DescriptionPanel
+└─ ImageComparison
+
+Mobile-first layout. Vertical stacking, no modals.
+
+API KEY HANDLING
+
+API key is entered by the user
+
+Stored in memory only by default
+
+Optional “remember key” checkbox → localStorage
+
+Key is never sent anywhere except directly to OpenRouter
+
+Authorization header:
+Authorization: Bearer <USER_OPENROUTER_KEY>
+
+OPENROUTER REQUEST PATTERNS
+
+VISION (DESCRIPTION GENERATION)
+
+Endpoint:
+POST https://openrouter.ai/api/v1/chat/completions
+
+Payload:
+
+model: selected vision model id
+
+messages:
+
+system: forensic description prompt
+
+user:
+
+text instruction
+
+image (base64 or URL)
+
+Response:
+
+Extract assistant message text
+
+Treat as forensic description
+
+IMAGE GENERATION (RECONSTRUCTION)
+
+Endpoint:
+POST https://openrouter.ai/api/v1/images/generations
+
+Payload:
+
+model: selected image model id
+
+prompt: forensic description text
+
+size: fixed (e.g. 512x512 or 768x768)
+
+Response:
+
+Extract image URL or base64
+
+Render directly in UI
+
+PROMPTS
+
+The forensic description prompt and reconstruction prompt are static strings embedded in the frontend.
+
+They must:
+
+Enforce strict constraints
+
+Avoid identity inference
+
+Be deterministic and structured
+
+(Claude will receive these prompts separately.)
+
+ERROR HANDLING
+
+Client-side only.
+
+Handle:
+
+Missing API key
+
+Invalid API key (401)
+
+Model not supporting modality
+
+Network failure
+
+Large image uploads
+
+Errors shown inline, never via alerts.
+
+SECURITY & PRIVACY
+
+No images are stored
+
+No analytics
+
+No logging
+
+All processing is transient
+
+Clear disclaimer in UI footer
+
+DEPLOYMENT
+
+Build using Vite
+
+Output static assets
+
+Deploy to GitHub Pages
+
+No environment variables required
+
+MVP ACCEPTANCE CRITERIA
+
+Works on mobile and desktop
+
+User can upload or capture a photo
+
+User can provide OpenRouter API key
+
+Description is generated successfully
+
+Image is reconstructed successfully
+
+App runs entirely as a static site
