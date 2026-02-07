@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 interface ImageInputProps {
   image: string | null
@@ -30,14 +30,22 @@ export default function ImageInput({ image, onImageChange }: ImageInputProps) {
       })
       setStream(mediaStream)
       setShowCamera(true)
-      if (videoRef.current) {
-        videoRef.current.srcObject = mediaStream
-      }
     } catch (err) {
       console.error('Error accessing camera:', err)
       alert('Unable to access camera. Please check permissions.')
     }
   }
+
+  // Attach stream to video element after it's mounted
+  useEffect(() => {
+    if (stream && videoRef.current && showCamera) {
+      videoRef.current.srcObject = stream
+      // Explicitly play the video (required for some browsers)
+      videoRef.current.play().catch(err => {
+        console.error('Error playing video:', err)
+      })
+    }
+  }, [stream, showCamera])
 
   const capturePhoto = () => {
     if (!videoRef.current) return
