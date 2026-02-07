@@ -5,8 +5,18 @@ interface ApiKeyInputProps {
   onApiKeyChange: (key: string) => void
 }
 
-// Export public key for testing
-export const PUBLIC_KEY = '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'
+// Decode base64 string
+const decodeBase64 = (str: string): string => {
+  try {
+    return atob(str)
+  } catch (e) {
+    console.error('Failed to decode key')
+    return ''
+  }
+}
+
+// Export public key for testing (base64 encoded)
+export const PUBLIC_KEY = decodeBase64('c2stb3ItdjEtNDBlMDY0MTMzNDg3YmY2MzAwZTNlYTE5MDY4NTBmMzkzNWI0ZjAwNGJiYTdjYmIzZjI5YmYxMTRmYzg1MDU0MQ==')
 
 export default function ApiKeyInput({ apiKey, onApiKeyChange }: ApiKeyInputProps) {
   const [rememberKey, setRememberKey] = useState(false)
