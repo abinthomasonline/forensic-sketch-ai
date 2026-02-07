@@ -17,7 +17,7 @@ A fully static web application that generates forensic facial descriptions and r
 
 ## Live Demo
 
-[Demo Link] (Update with your GitHub Pages URL)
+🚀 [https://abinthomasonline.github.io/forensic-sketch-ai/](https://abinthomasonline.github.io/forensic-sketch-ai/)
 
 ## Tech Stack
 
@@ -136,19 +136,33 @@ face-reconstruction/
 
 ## Deployment to GitHub Pages
 
-1. Update `vite.config.ts` with your repository name:
-   ```ts
-   base: '/your-repo-name/',
-   ```
+This project is configured with GitHub Actions for automatic deployment. Every push to the `main` branch will automatically deploy to GitHub Pages.
 
-2. Build and deploy:
+### Initial Setup (One-time)
+
+1. Push your code to GitHub:
    ```bash
-   npm run build
-   npm install -g gh-pages
-   gh-pages -d dist
+   git add .
+   git commit -m "Setup GitHub Pages deployment"
+   git push
    ```
 
-3. Enable GitHub Pages in repository settings (Source: gh-pages branch)
+2. Enable GitHub Pages in your repository settings:
+   - Go to Settings → Pages
+   - Under "Build and deployment", set Source to: **GitHub Actions**
+
+3. Wait for the workflow to complete (check the Actions tab)
+
+4. Your site will be live at: `https://abinthomasonline.github.io/forensic-sketch-ai/`
+
+### Manual Deployment
+
+To deploy manually without pushing:
+```bash
+npm run deploy
+```
+
+Then follow the same GitHub Pages settings above.
 
 ## Credits
 
