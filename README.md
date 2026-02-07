@@ -114,7 +114,7 @@ Want to try other models? Click "Use Custom ID" on either model selector and ent
 ### Project Structure
 
 ```
-face-reconstruction/
+forensic-sketch-ai/
 ├── src/
 │   ├── components/       # React components
 │   ├── api.ts           # OpenRouter API integration

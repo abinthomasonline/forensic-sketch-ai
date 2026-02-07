@@ -6,7 +6,7 @@ interface ApiKeyInputProps {
 }
 
 // Export public key for testing
-export const PUBLIC_KEY = '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'
+export const PUBLIC_KEY = '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'
 
 export default function ApiKeyInput({ apiKey, onApiKeyChange }: ApiKeyInputProps) {
   const [rememberKey, setRememberKey] = useState(false)

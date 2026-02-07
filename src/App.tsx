@@ -26,7 +26,7 @@ function App() {
   useEffect(() => {
     const loadPlaceholderImage = async () => {
       try {
-        const response = await fetch('/placeholder.png')
+        const response = await fetch(import.meta.env.BASE_URL + 'placeholder.png')
         const blob = await response.blob()
         const reader = new FileReader()
         reader.onloadend = () => {
@@ -142,7 +142,7 @@ function App() {
             </a>
             {' '}•{' '}
             <a
-              href="https://github.com/abinthomasonline/face-reconstruction"
+              href="https://github.com/abinthomasonline/forensic-sketch-ai"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-600 hover:underline"
