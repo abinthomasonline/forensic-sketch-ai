@@ -118,8 +118,7 @@ function App() {
 
         <footer className="mt-12 pt-6 border-t border-gray-200 text-center space-y-2">
           <p className="text-xs text-gray-500">
-            All processing happens in your browser. No images or data are stored on any server.
-            Your API key is only sent directly to OpenRouter.
+          All processing happens in your browser and on OpenRouter’s servers. No images or data are stored by this site. Your API key is sent directly to OpenRouter only.
           </p>
           <p className="text-xs text-gray-500">
             Made with ❤️ by{' '}
