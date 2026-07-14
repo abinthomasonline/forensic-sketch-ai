@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Header from './components/Header'
+import PaperPmfPromo from './components/PaperPmfPromo'
 import ApiKeyInput from './components/ApiKeyInput'
 import ImageInput from './components/ImageInput'
 import ModelSelector from './components/ModelSelector'
@@ -85,6 +86,8 @@ function App() {
 
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <div className="space-y-6">
+          <PaperPmfPromo />
+
           <ApiKeyInput apiKey={apiKey} onApiKeyChange={setApiKey} />
 
           <ImageInput image={image} onImageChange={setImage} />
