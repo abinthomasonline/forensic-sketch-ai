@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useRef, useState } from 'react'
 import Header from './components/Header'
 import PaperPmfPromo from './components/PaperPmfPromo'
 import ApiKeyInput from './components/ApiKeyInput'
@@ -9,9 +9,36 @@ import ProgressIndicator from './components/ProgressIndicator'
 import Results from './components/Results'
 import { generateForensicDescription, generateReconstructedImage } from './api'
 
+const DEFAULT_IMAGE_URL = `${import.meta.env.BASE_URL}placeholder.jpg`
+
+const resolveImageDataUrl = async (imageSource: string): Promise<string> => {
+  if (imageSource.startsWith('data:')) {
+    return imageSource
+  }
+
+  const response = await fetch(imageSource)
+  if (!response.ok) {
+    throw new Error(`Failed to load the default image (${response.status})`)
+  }
+
+  const blob = await response.blob()
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => {
+      if (typeof reader.result === 'string') {
+        resolve(reader.result)
+      } else {
+        reject(new Error('Failed to prepare the default image'))
+      }
+    }
+    reader.onerror = () => reject(reader.error ?? new Error('Failed to prepare the default image'))
+    reader.readAsDataURL(blob)
+  })
+}
+
 function App() {
   const [apiKey, setApiKey] = useState('')
-  const [image, setImage] = useState<string | null>(null)
+  const [image, setImage] = useState<string | null>(DEFAULT_IMAGE_URL)
   const [visionModel, setVisionModel] = useState('google/gemini-3-flash-preview')
   const [imageModel, setImageModel] = useState('google/gemini-2.5-flash-image')
   const [loading, setLoading] = useState(false)
@@ -22,42 +49,38 @@ function App() {
     reconstructedImage: string
     description: string
   } | null>(null)
+  const activeRunRef = useRef(0)
 
-  // Load placeholder image on mount
-  useEffect(() => {
-    const loadPlaceholderImage = async () => {
-      try {
-        const response = await fetch(import.meta.env.BASE_URL + 'placeholder.png')
-        const blob = await response.blob()
-        const reader = new FileReader()
-        reader.onloadend = () => {
-          setImage(reader.result as string)
-        }
-        reader.readAsDataURL(blob)
-      } catch (err) {
-        console.error('Failed to load placeholder image:', err)
-      }
-    }
+  const canRun = apiKey.trim() !== '' && Boolean(image)
 
-    loadPlaceholderImage()
-  }, [])
-
-  const canRun = apiKey.trim() !== '' && image !== null
+  const handleImageChange = (nextImage: string) => {
+    activeRunRef.current += 1
+    setImage(nextImage || null)
+    setResults(null)
+    setError(null)
+    setProgressStage(null)
+    setLoading(false)
+  }
 
   const handleRun = async () => {
     if (!canRun) return
 
+    const runId = activeRunRef.current + 1
+    activeRunRef.current = runId
     setLoading(true)
     setError(null)
     setResults(null)
 
     try {
+      const selectedImage = image!
       setProgressStage('Generating forensic description...')
+      const imageForApi = await resolveImageDataUrl(selectedImage)
       const { description } = await generateForensicDescription(
         apiKey,
         visionModel,
-        image!
+        imageForApi
       )
+      if (runId !== activeRunRef.current) return
 
       setProgressStage('Generating reconstructed face...')
       const { imageUrl } = await generateReconstructedImage(
@@ -65,18 +88,22 @@ function App() {
         imageModel,
         description
       )
+      if (runId !== activeRunRef.current) return
 
       setResults({
-        originalImage: image!,
+        originalImage: selectedImage,
         reconstructedImage: imageUrl,
         description
       })
       setProgressStage(null)
     } catch (err) {
+      if (runId !== activeRunRef.current) return
       setError(err instanceof Error ? err.message : 'An unknown error occurred')
       setProgressStage(null)
     } finally {
-      setLoading(false)
+      if (runId === activeRunRef.current) {
+        setLoading(false)
+      }
     }
   }
 
@@ -90,7 +117,7 @@ function App() {
 
           <ApiKeyInput apiKey={apiKey} onApiKeyChange={setApiKey} />
 
-          <ImageInput image={image} onImageChange={setImage} />
+          <ImageInput image={image} onImageChange={handleImageChange} />
 
           <ModelSelector
             visionModel={visionModel}

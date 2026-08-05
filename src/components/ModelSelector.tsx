@@ -72,7 +72,7 @@ export default function ModelSelector({
           href="https://openrouter.ai/models"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-600 hover:underline"
+          className="text-blue-600 underline hover:text-blue-700"
         >
           OpenRouter Models
         </a>

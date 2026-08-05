@@ -123,7 +123,7 @@ forensic-sketch-ai/
 ├── tests/
 │   └── models.test.ts   # Integration tests
 ├── public/
-│   ├── placeholder.png  # Default image
+│   ├── placeholder.jpg  # Default image
 │   └── favicon-*.png    # Favicon set
 └── vitest.config.ts     # Test configuration
 ```

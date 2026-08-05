@@ -38,7 +38,7 @@ export default function PaperPmfPromo() {
           href={PAPERPMF_URL}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Run the PaperPMF diagnostic (opens in a new tab)"
+          aria-label="Run diagnostic — PaperPMF (opens in a new tab)"
           className="inline-flex min-h-[44px] w-full shrink-0 items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 md:w-auto"
         >
           Run diagnostic ↗
