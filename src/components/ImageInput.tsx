@@ -150,7 +150,7 @@ export default function ImageInput({ image, onImageChange }: ImageInputProps) {
         <div className="space-y-3">
           <img
             src={image}
-            alt="Selected"
+            alt="Selected face for forensic sketch reconstruction"
             className="w-full max-h-96 object-contain rounded-md bg-gray-50"
           />
           <button

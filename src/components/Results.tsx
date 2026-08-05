@@ -16,11 +16,11 @@ export default function Results({ originalImage, reconstructedImage, description
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <h3 className="text-sm font-medium text-gray-700 mb-2">Original</h3>
-            <img src={originalImage} alt="Original" className="w-full rounded-md border border-gray-300" />
+            <img src={originalImage} alt="Original face provided for reconstruction" className="w-full rounded-md border border-gray-300" />
           </div>
           <div>
             <h3 className="text-sm font-medium text-gray-700 mb-2">Reconstructed</h3>
-            <img src={reconstructedImage} alt="Reconstructed" className="w-full rounded-md border border-gray-300" />
+            <img src={reconstructedImage} alt="AI-generated forensic-style face reconstruction" className="w-full rounded-md border border-gray-300" />
           </div>
         </div>
       </div>

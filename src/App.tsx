@@ -84,7 +84,7 @@ function App() {
     <div className="min-h-screen bg-gray-50">
       <Header />
 
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
+      <main className="container mx-auto px-4 py-8 max-w-4xl">
         <div className="space-y-6">
           <PaperPmfPromo />
 
@@ -119,9 +119,37 @@ function App() {
           )}
         </div>
 
-        <footer className="mt-12 pt-6 border-t border-gray-200 text-center space-y-2">
+        <section
+          aria-labelledby="how-it-works-heading"
+          className="mt-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm"
+        >
+          <h2 id="how-it-works-heading" className="text-lg font-medium text-gray-900">
+            How the face-to-sketch experiment works
+          </h2>
+          <ol className="mt-4 grid gap-4 text-sm text-gray-600 md:grid-cols-3">
+            <li>
+              <h3 className="font-medium text-gray-900">1. Choose a photo</h3>
+              <p className="mt-1">Upload an image or capture one with your device camera.</p>
+            </li>
+            <li>
+              <h3 className="font-medium text-gray-900">2. Describe the face</h3>
+              <p className="mt-1">A vision model converts visible facial details into a written description.</p>
+            </li>
+            <li>
+              <h3 className="font-medium text-gray-900">3. Reconstruct a sketch</h3>
+              <p className="mt-1">An image model uses that description to create a forensic-style sketch.</p>
+            </li>
+          </ol>
+          <p className="mt-4 text-xs text-gray-500">
+            This is a creative experiment, not an identification or investigative tool. AI outputs can be inaccurate.
+          </p>
+        </section>
+      </main>
+
+      <footer className="container mx-auto max-w-4xl px-4 pb-8">
+        <div className="border-t border-gray-200 pt-6 text-center space-y-2">
           <p className="text-xs text-gray-500">
-          All processing happens in your browser and on OpenRouter’s servers. No images or data are stored by this site. Your API key is sent directly to OpenRouter only.
+            All processing happens in your browser and on OpenRouter’s servers. No images or data are stored by this site. Your API key is sent directly to OpenRouter only.
           </p>
           <p className="text-xs text-gray-500">
             Made with ❤️ by{' '}
@@ -152,8 +180,8 @@ function App() {
               source code
             </a>
           </p>
-        </footer>
-      </div>
+        </div>
+      </footer>
     </div>
   )
 }

@@ -17,7 +17,7 @@ A fully static web application that generates forensic facial descriptions and r
 
 ## Live Demo
 
-🚀 [https://abinthomasonline.github.io/forensic-sketch-ai/](https://abinthomasonline.github.io/forensic-sketch-ai/)
+🚀 [https://abinthomas.in/forensic-sketch-ai/](https://abinthomas.in/forensic-sketch-ai/)
 
 ## Tech Stack
 
@@ -153,7 +153,7 @@ This project is configured with GitHub Actions for automatic deployment. Every p
 
 3. Wait for the workflow to complete (check the Actions tab)
 
-4. Your site will be live at: `https://abinthomasonline.github.io/forensic-sketch-ai/`
+4. Your site will be live at: `https://abinthomas.in/forensic-sketch-ai/`
 
 ### Manual Deployment
 
